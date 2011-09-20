@@ -5,14 +5,15 @@
 #define REG_KEY "HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Environment"
 #define REG_VAR "Path"
 
+QSettings qSettings(REG_KEY, QSettings::NativeFormat);
+
 Dialog::Dialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Dialog)
 {
     ui->setupUi(this);    
 
-    QSettings settings(REG_KEY, QSettings::NativeFormat);
-    QString S = settings.value(REG_VAR).toString();
+    QString S = qSettings.value(REG_VAR).toString();
     ui->plainTextEdit->document()->setPlainText(S.replace(";","\n"));
 }
 
@@ -23,10 +24,12 @@ Dialog::~Dialog()
 
 void Dialog::on_btnSave_clicked()
 {
-
+    QString S = ui->plainTextEdit->document()->toPlainText();
+    qSettings.setValue(REG_VAR,S.replace("\n",";"));
+    this->close();
 }
 
-void Dialog::on_pushButton_2_clicked()
+void Dialog::on_btnClose_clicked()
 {
-
+    this->close();
 }

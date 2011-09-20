@@ -18,7 +18,7 @@ public:
 private slots:
     void on_btnSave_clicked();
 
-    void on_pushButton_2_clicked();
+    void on_btnClose_clicked();
 
 private:
     Ui::Dialog *ui;
